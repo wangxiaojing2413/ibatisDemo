@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+        PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+    <!--参数类-->
+    <typeAlias alias="parameterMap" type="com.yinhai.ibatis.utils.ParameterMap"/>
+    <!--User别名-->
+    <typeAlias alias="User" type="com.yinhai.ibatis.entity.User"/>
+    <!--查询所有用户-->
+    <select id="listAllUser" resultClass="User">
+        SELECT * FROM users
+    </select>
+    <!--根据用户id查询用户-->
+    <select id="getUserById" parameterClass="java.lang.Integer" resultClass="User">
+        SELECT users.id,users.username,users.`password`,users.mobile,users.email,
+        users.gmt_create,users.gmt_modified FROM users WHERE id=#id#
+    </select>
+    <!--查询所有用户返回值使用HashMap-->
+    <select id="listAllUserUseHashMap" resultClass="java.util.HashMap">
+        select * from users
+    </select>
+    <!--根据用户名查询用户-->
+    <select id="getUserByUsername" parameterClass="java.lang.String" resultClass="java.util.HashMap">
+        SELECT users.id,users.username,users.`password`,users.mobile,users.email,
+        users.gmt_create,users.gmt_modified FROM users WHERE username=#username#
+    </select>
+    
+    <!--多条件查询，使用封装的parameterMap来传递参数-->
+    <select id="getUserByConditions" parameterClass="parameterMap" resultClass="java.util.HashMap">
+        SELECT users.id,users.username,users.`password`,users.mobile,users.email,
+        users.gmt_create,users.gmt_modified FROM users WHERE mobile=#mobile#
+          and email=#email#
+    </select>
+    
+    <!--插入用户-->
+    <insert id="addUser" parameterClass="parameterMap">
+        insert into users(users.username,users.`password`,users.mobile,users.email,
+        users.gmt_create,users.gmt_modified) VALUES(#username#,#password#,#mobile#,#email#,
+			#create_date#,#update_date#)
+    </insert>
+</sqlMap>

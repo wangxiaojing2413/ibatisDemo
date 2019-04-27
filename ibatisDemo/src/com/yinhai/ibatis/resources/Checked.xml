@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+        PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+    <select id="listchecked" resultClass="java.util.HashMap">
+        SELECT * FROM checked
+    </select>
+    <resultMap id="get-checked" class="com.yinhai.ibatis.entity.Checked">
+        <result property="checked" column="is_checked" javaType="java.lang.Boolean" jdbcType="int"></result>
+        <result property="id" column="id" javaType="java.lang.Integer" jdbcType="bigint"></result>
+        <result property="username" column="username" javaType="java.lang.String" jdbcType="varchar" ></result>
+    </resultMap>
+    <select id="list1" resultMap="get-checked">
+        SELECT * FROM checked WHERE id=1
+    </select>
+    <select id="list2" resultMap="get-checked">
+        SELECT * FROM checked
+    </select>
+</sqlMap>
